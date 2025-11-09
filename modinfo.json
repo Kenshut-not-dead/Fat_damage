@@ -1,0 +1,55 @@
+[
+  {
+    "type": "MOD_INFO",
+    "id": "Fat_damage",
+    "name": "Fat damage",
+    "authors": [ "Kenshut" ],
+    "description": "Your fat can make u better human.",
+    "category": "misc_additions",
+    "dependencies": [ "dda" ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "eoc_baff_damage",
+    "effect": [
+	  {
+        "if": { "and": [ { "math": [ "u_val('bmi_permil') > 5000" ] }, { "math": [ "u_val('bmi_permil') <= 10000" ] } ] },
+        "then": { "math": [ "_Доп_урон = ( rand( 2 ) + 1 )*2" ] }
+      },
+	  {
+        "if": { "and": [ { "math": [ "u_val('bmi_permil') > 10000" ] }, { "math": [ "u_val('bmi_permil') <= 15000" ] } ] },
+        "then": { "math": [ "_Доп_урон = ( rand( 3 ) + 2 )*2" ] }
+      },
+	  {
+        "if": { "and": [ { "math": [ "u_val('bmi_permil') > 15000" ] }, { "math": [ "u_val('bmi_permil') <= 20000" ] } ] },
+        "then": { "math": [ "_Доп_урон = ( rand( 4 ) + 2 )*2" ] }
+      },
+	  {
+        "if": { "math": [ "u_val('bmi_permil') > 20000" ] },
+        "then": { "math": [ "_Доп_урон = ( rand( 6 ) + 2 )*2" ] }
+      },
+      { "npc_deal_damage": "bash", "amount": { "context_val": "Доп_урон" } }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "event_baff_damage_mele_attacks_character",
+    "eoc_type": "EVENT",
+    "required_event": "character_melee_attacks_character",
+    "condition": { "math": [ "u_val('bmi_permil') > 5000" ] },
+    "effect": [ { "run_eocs": [ "eoc_baff_damage" ] } ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "event_baff_damage_mele_attacks_monster",
+    "eoc_type": "EVENT",
+    "required_event": "character_melee_attacks_monster",
+    "condition": { "math": [ "u_val('bmi_permil') > 5000" ] },
+    "effect": [ { "run_eocs": [ "eoc_baff_damage" ] } ]
+  }
+  
+  
+  
+  
+  
+]
